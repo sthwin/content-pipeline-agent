@@ -15,9 +15,9 @@ def web_search_tool(query: str):
     Returns:
         A list of search results with the website content in markdown format
     """
-    firecrawl = FirecrawlApp(api_key=os.getenv("FIRECRAWL_API_KEY"))
+    app = FirecrawlApp(api_key=os.getenv("FIRECRAWL_API_KEY"))
 
-    response = firecrawl.search(
+    response = app.search(
         query=query,
         limit=5,
         scrape_options=ScrapeOptions(
@@ -25,10 +25,10 @@ def web_search_tool(query: str):
         ),
     )
 
-    cleaned_chunks = []
-
     if not response.success:
         return "Error using tool: " + response.error
+
+    cleaned_chunks = []
 
     for result in response.data:
 
